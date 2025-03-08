@@ -1,0 +1,5 @@
+package pos.api.teampixl.org.models.order;
+
+public class Order {
+    
+}
