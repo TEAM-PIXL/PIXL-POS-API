@@ -1,0 +1,17 @@
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+simpleeval = ">=0.9.11"
+python-json-logger = "^2.0.7"
+defusedxml = "^0.7.1"
+mkdocs = "^1.6.1"
+mistune = ">=0.8,<0.84"
+mkdocs-material = "^9.5.42"
+mkdocstrings-python = "^1.12.2"
+mkdocs-markdownextradata-plugin = "^0.2.6"
+markdown-grid-tables = "^0.3.2"
+neoteroi-mkdocs = "^1.1.0"
+mkdocs-glightbox = "^0.4.0"
+pyyaml = "^6.0.2"

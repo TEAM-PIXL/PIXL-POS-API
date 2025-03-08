@@ -1,0 +1,50 @@
+name: Compendium
+
+on:
+  push:
+    branches:
+      - 'development'
+      - 'quality'
+      - 'production'
+  pull_request:
+    branches:
+      - 'development'
+      - 'quality'
+      - 'production'
+
+jobs:
+  Compendium:
+    uses: parkermmr/compendium/.github/workflows/compendium-java.yml@main
+    with: 
+      java-version: "21"
+      distribution: "corretto"
+      ref-name: ${{ github.ref_name }}
+      sha: ${{ github.sha }}
+      docs-branch: "docs"
+    secrets:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+  Build:
+    needs: [Compendium]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: parkermmr/compendium/jobs/docker/build@v1
+        with:
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repo: ${{ vars.DOCKER_REPO }}/${{ vars.REPOSITORY }}
+          sha: ${{ github.sha }}
+          ref-name: ${{ github.ref_name }}
+
+  Publish:
+    needs: [Compendium]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: parkermmr/compendium/jobs/release/publish-docs@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ github.sha }}
+          ref_name: ${{ github.ref }}
+          branch: "pages"
