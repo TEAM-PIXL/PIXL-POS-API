@@ -20,7 +20,7 @@ jobs:
       distribution: "corretto"
       ref-name: ${{ github.ref_name }}
       sha: ${{ github.sha }}
-      docs-branch: "docs"
+      docs-branch: "documentation"
     secrets:
       TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
