@@ -1,2 +1,0 @@
-
-# PIXL POS API Service
