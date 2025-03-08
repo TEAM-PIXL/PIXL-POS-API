@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"pos.api.teampixl.org"},{"l":"pos.api.teampixl.org.config"},{"l":"pos.api.teampixl.org.controllers"},{"l":"pos.api.teampixl.org.models"},{"l":"pos.api.teampixl.org.models.data"},{"l":"pos.api.teampixl.org.services"}];updateSearchResults();
