@@ -22,10 +22,19 @@
 hs_err_pid*
 replay_pid*
 
-target/
 bin/
 build/
-site/
+classes/
+generated-sources/
+generated-test-sources/
+maven-archiver/
+maven-status/
+test-classes/
+checkstyle-cachefile
+checkstyle*.xml
+*.jar.original
+surefire-reports/
+target/
 
 .vscode/
 .classpath

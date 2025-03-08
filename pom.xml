@@ -72,9 +72,13 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.11.2</version>
         <configuration>
-          <show>private</show>
-          <nohelp>true</nohelp>
-        </configuration>
+              <doclint>none</doclint>
+              <show>protected</show>
+              <detectJavaApiLink>true</detectJavaApiLink>
+              <sourcepath>${basedir}/src/main/java</sourcepath>
+              <additionalJOptions>${modulepath.option}</additionalJOptions>
+              <outputDirectory>${project.build.directory}/site</outputDirectory>
+          </configuration>
       </plugin>
 
       <!-- Checkstyle -->
