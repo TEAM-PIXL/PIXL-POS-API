@@ -56,6 +56,7 @@ public class Logger {
         if (level.ordinal() < threshold.ordinal()) return;
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
         String logMessage = timestamp + " [" + level + "] (" + name + ") - " + message;
+        System.out.println(logMessage);
         synchronized (lock) {
             try {
                 writer.write(logMessage + "\n");

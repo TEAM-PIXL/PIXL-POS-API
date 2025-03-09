@@ -1,0 +1,34 @@
+-- CREATE TABLE IF NOT EXISTS user_logs (
+--     id TEXT PRIMARY KEY,
+--     user_id TEXT NOT NULL,
+--     log_type TEXT NOT NULL,
+--     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (user_id) REFERENCES users(id)
+-- );
+
+-- CREATE TABLE IF NOT EXISTS global_logs (
+--     log_id TEXT PRIMARY KEY,
+--     user_id TEXT NOT NULL,
+--     log_timestamp INTEGER NOT NULL,
+--     log_action TEXT NOT NULL,
+--     log_status TEXT NOT NULL,
+--     log_type TEXT NOT NULL,
+--     log_category TEXT NOT NULL,
+--     log_priority TEXT NOT NULL,
+--     log_description TEXT NOT NULL,
+--     log_location TEXT,
+--     log_device TEXT,
+--     log_ip TEXT,
+--     log_mac TEXT,
+--     log_os TEXT,
+--     FOREIGN KEY (user_id) REFERENCES users(id)
+-- );
+
+-- CREATE TABLE IF NOT EXISTS global_notes (
+--     note_id TEXT PRIMARY KEY,
+--     user_id TEXT NOT NULL,
+--     note_title TEXT NOT NULL,
+--     note_content TEXT NOT NULL,
+--     timestamp INTEGER NOT NULL,
+--     FOREIGN KEY (user_id) REFERENCES users(id)
+-- );
