@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class DeviceInfoRetriever {
-    public static String getDeviceModel() {
+    protected static String getDeviceModel() {
         String os = System.getProperty("os.name").toLowerCase();
         String model = null;
         try {

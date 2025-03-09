@@ -6,7 +6,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class MacAddressRetriever {
-    public static String getMacAddress() {
+    protected static String getMacAddress() {
         try {
             InetAddress ip = InetAddress.getLocalHost();
             NetworkInterface network = NetworkInterface.getByInetAddress(ip);

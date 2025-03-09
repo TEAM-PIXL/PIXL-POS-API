@@ -19,7 +19,7 @@ public class IpChecker {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    // ignore
                 }
             }
         }

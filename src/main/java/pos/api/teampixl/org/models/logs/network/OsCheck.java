@@ -18,7 +18,7 @@ public final class OsCheck {
      *
      * @returns - the operating system detected
      */
-    public static OSType getOperatingSystemType() {
+    protected static OSType getOperatingSystemType() {
         if (detectedOS == null) {
             String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
             if ((OS.contains("mac")) || (OS.contains("darwin"))) {

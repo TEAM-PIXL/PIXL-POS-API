@@ -5,27 +5,27 @@ public class ServerLocation {
     private String region;
     private String city;
 
-    public String getCountry() {
+    protected String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    protected void setCountry(String country) {
         this.country = country;
     }
 
-    public String getRegion() {
+    protected String getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    protected void setRegion(String region) {
         this.region = region;
     }
 
-    public String getCity() {
+    protected String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    protected void setCity(String city) {
         this.city = city;
     }
 
