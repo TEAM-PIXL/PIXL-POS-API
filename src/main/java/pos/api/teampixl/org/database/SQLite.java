@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import pos.api.teampixl.org.logger.Logger;
+import pos.api.teampixl.org.common.logger.Logger;
 
 /**
  * This class provides methods to establish a connection to the SQLite database and initialize the database.

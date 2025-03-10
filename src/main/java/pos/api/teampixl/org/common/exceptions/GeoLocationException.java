@@ -1,4 +1,4 @@
-package pos.api.teampixl.org.exceptions;
+package pos.api.teampixl.org.common.exceptions;
 
 public class GeoLocationException extends Exception {
     public GeoLocationException(String message) {

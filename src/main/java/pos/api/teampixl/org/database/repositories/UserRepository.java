@@ -1,4 +1,4 @@
-package pos.api.teampixl.org.models.user;
+package pos.api.teampixl.org.database.repositories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +9,10 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Repository;
 
+import pos.api.teampixl.org.common.logger.Logger;
 import pos.api.teampixl.org.database.SQLite;
-import pos.api.teampixl.org.logger.Logger;
+import pos.api.teampixl.org.models.user.User;
+import pos.api.teampixl.org.models.user.UserDTO;
 
 @Repository
 public class UserRepository {

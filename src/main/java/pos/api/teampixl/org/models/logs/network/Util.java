@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 
-import pos.api.teampixl.org.exceptions.GeoLocationException;
+import pos.api.teampixl.org.common.exceptions.GeoLocationException;
 
 public class Util {
     public static String getIp() throws Exception {

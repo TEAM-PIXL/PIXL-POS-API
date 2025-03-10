@@ -2,9 +2,9 @@ package pos.api.teampixl.org.services;
 
 import org.springframework.stereotype.Service;
 
+import pos.api.teampixl.org.database.repositories.UserRepository;
 import pos.api.teampixl.org.models.user.User;
 import pos.api.teampixl.org.models.user.UserDTO;
-import pos.api.teampixl.org.models.user.UserRepository;
 
 import java.util.Collection;
 

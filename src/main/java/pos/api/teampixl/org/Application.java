@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.annotation.PreDestroy;
+import pos.api.teampixl.org.common.logger.Logger;
 import pos.api.teampixl.org.database.SQLite;
-import pos.api.teampixl.org.logger.Logger;
 import pos.api.teampixl.org.server.URL;
 
 

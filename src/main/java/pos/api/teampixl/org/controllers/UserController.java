@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+import pos.api.teampixl.org.common.exceptions.UserNotFoundException;
 import pos.api.teampixl.org.models.user.User;
 import pos.api.teampixl.org.models.user.UserDTO;
 import pos.api.teampixl.org.services.UserService;
@@ -43,6 +43,9 @@ public class UserController {
     @Operation(summary = "Get a user by username")
     public ResponseEntity<Map<String, Object>> getUser(@PathVariable String username) {
         User user = userService.getUser(username);
+        if (user == null) {
+            throw new UserNotFoundException(username);
+        }
         return ResponseEntity.ok(user.toMap());
     }
     

@@ -1,4 +1,4 @@
-package pos.api.teampixl.org.logger;
+package pos.api.teampixl.org.common.logger;
 
 import java.io.FileWriter;
 import java.io.IOException;

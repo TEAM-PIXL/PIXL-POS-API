@@ -1,6 +1,6 @@
 package pos.api.teampixl.org.models.logs;
 
-import pos.api.teampixl.org.logger.Logger;
+import pos.api.teampixl.org.common.logger.Logger;
 import pos.api.teampixl.org.models.logs.definitions.Action;
 import pos.api.teampixl.org.models.logs.definitions.Category;
 import pos.api.teampixl.org.models.logs.definitions.Priority;
