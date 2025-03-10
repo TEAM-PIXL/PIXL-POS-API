@@ -100,7 +100,7 @@ public class SQLite {
                 }
             }
             
-            LOGGER.info("Database initialized successfully.");
+            LOGGER.info("Database initialized successfully at: " + SQLite.DB_URL);
         } catch (SQLException e) {
             LOGGER.error("Database initialization error: " + e.getMessage());
         }

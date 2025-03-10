@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.annotation.PreDestroy;
 import pos.api.teampixl.org.common.logger.Logger;
-import pos.api.teampixl.org.database.SQLite;
 import pos.api.teampixl.org.server.URL;
 
 
@@ -19,7 +18,6 @@ public class Application {
 
   public static void main(String[] args) {
     ApplicationContext context = SpringApplication.run(Application.class, args);
-    SQLite.initializeDatabase();
     Logger.getLogger(Application.class.getName()).info("Application started from " + Application.class.getName());
     Logger.getLogger(Application.class.getName()).info("Running application on " + new URL(context));
   }
