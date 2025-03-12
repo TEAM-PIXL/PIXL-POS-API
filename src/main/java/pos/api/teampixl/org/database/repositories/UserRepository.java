@@ -43,6 +43,28 @@ public class UserRepository {
         throw new UserNotFoundException(username);
     }
 
+    public User findByEmail(String email) {
+        try (Connection conn = SQLite.connect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE email = ?")) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new User(
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        User.UserRole.valueOf(rs.getString("role"))
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error finding user by username: " + e.getMessage());
+        }
+        throw new UserNotFoundException(email);
+    }
+
     public void save(UserDTO userDTO) {
         User user = new User(
             userDTO.getFirstName(),

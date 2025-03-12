@@ -1,6 +1,7 @@
 package pos.api.teampixl.org.models.user;
 
 import java.util.Map;
+import java.util.Set;
 
 public class UserDTO {
 
@@ -78,5 +79,7 @@ public class UserDTO {
         map.put("role", this.role);
         return map;
     }
+
+    public static Set<String> validFields = Set.of("first_name", "last_name", "username", "password", "email", "role");
     
 }
