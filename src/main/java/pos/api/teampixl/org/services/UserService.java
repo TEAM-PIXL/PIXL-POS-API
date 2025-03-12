@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import pos.api.teampixl.org.database.repositories.UserRepository;
 import pos.api.teampixl.org.models.user.User;
 import pos.api.teampixl.org.models.user.UserDTO;
+import pos.api.teampixl.org.models.user.Validators;
+import pos.api.teampixl.org.common.exceptions.validation.ValidationCode;
+import pos.api.teampixl.org.common.exceptions.validation.Exceptions;
+import pos.api.teampixl.org.common.exceptions.validation.FieldValidationException;
 
 @Service
 public class UserService {
@@ -31,6 +35,8 @@ public class UserService {
     }
 
     public void createUser(UserDTO userDTO) {
+        Collection<ValidationCode> validations = Validators.validateUsersByUsername(userDTO.getUsername());
+        if (!Exceptions.isSuccessful(validations)) throw new FieldValidationException(validations);
         userRepository.save(userDTO);
     }
 
