@@ -77,14 +77,15 @@ public class UserRepository {
             user.getData().put(entry.getKey(), entry.getValue());
         }
         try (Connection conn = SQLite.connect();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ?, updated_at = ? WHERE username = ?")) {
             stmt.setString(1, user.getDataValue("first_name").toString());
             stmt.setString(2, user.getDataValue("last_name").toString());
             stmt.setString(3, user.getDataValue("username").toString());
             stmt.setString(4, user.getDataValue("password").toString());
             stmt.setString(5, user.getDataValue("email").toString());
             stmt.setString(6, user.getDataValue("role").toString());
-            stmt.setString(7, username);
+            stmt.setLong(7, System.currentTimeMillis());
+            stmt.setString(8, username);
             stmt.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Error updating user by username: " + e.getMessage());
@@ -97,14 +98,15 @@ public class UserRepository {
             user.getData().put(entry.getKey(), entry.getValue());
         }
         try (Connection conn = SQLite.connect();
-                PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ?, updated_at = ? WHERE username = ?")) {
                 stmt.setString(1, user.getDataValue("first_name").toString());
                 stmt.setString(2, user.getDataValue("last_name").toString());
                 stmt.setString(3, user.getDataValue("username").toString());
                 stmt.setString(4, user.getDataValue("password").toString());
                 stmt.setString(5, user.getDataValue("email").toString());
                 stmt.setString(6, user.getDataValue("role").toString());
-                stmt.setString(7, username);
+                stmt.setLong(7, System.currentTimeMillis());
+                stmt.setString(8, username);
                 stmt.executeUpdate();
             } catch (SQLException e) {
                 LOGGER.error("Error patching user by username: " + e.getMessage());
