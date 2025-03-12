@@ -14,6 +14,7 @@ import pos.api.teampixl.org.common.logger.Logger;
 import pos.api.teampixl.org.database.SQLite;
 import pos.api.teampixl.org.models.user.User;
 import pos.api.teampixl.org.models.user.UserDTO;
+import pos.api.teampixl.org.common.exceptions.UserNotFoundException;
 
 @Repository
 public class UserRepository {
@@ -39,7 +40,7 @@ public class UserRepository {
         } catch (SQLException e) {
             LOGGER.error("Error finding user by username: " + e.getMessage());
         }
-        return null;
+        throw new UserNotFoundException(username);
     }
 
     public void save(UserDTO userDTO) {
@@ -72,11 +73,30 @@ public class UserRepository {
     public void update(String username, UserDTO userDTO) {
         User user = find(username);
         Map<String, Object> updateMap = userDTO.toMap();
-        if (user != null) {
-            for(Map.Entry<String, Object> entry : updateMap.entrySet()) {
-                user.getData().put(entry.getKey(), entry.getValue());
-            }
-            try (Connection conn = SQLite.connect();
+        for(Map.Entry<String, Object> entry : updateMap.entrySet()) {
+            user.getData().put(entry.getKey(), entry.getValue());
+        }
+        try (Connection conn = SQLite.connect();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
+            stmt.setString(1, user.getDataValue("first_name").toString());
+            stmt.setString(2, user.getDataValue("last_name").toString());
+            stmt.setString(3, user.getDataValue("username").toString());
+            stmt.setString(4, user.getDataValue("password").toString());
+            stmt.setString(5, user.getDataValue("email").toString());
+            stmt.setString(6, user.getDataValue("role").toString());
+            stmt.setString(7, username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Error updating user by username: " + e.getMessage());
+        }
+    }
+
+    public void patch(String username, Map<String, Object> patchMap) {
+        User user = find(username);
+        for(Map.Entry<String, Object> entry : patchMap.entrySet()) {
+            user.getData().put(entry.getKey(), entry.getValue());
+        }
+        try (Connection conn = SQLite.connect();
                 PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
                 stmt.setString(1, user.getDataValue("first_name").toString());
                 stmt.setString(2, user.getDataValue("last_name").toString());
@@ -87,30 +107,7 @@ public class UserRepository {
                 stmt.setString(7, username);
                 stmt.executeUpdate();
             } catch (SQLException e) {
-                LOGGER.error("Error updating user by username: " + e.getMessage());
-            }
-        }
-    }
-
-    public void patch(String username, Map<String, Object> patchMap) {
-        User user = find(username);
-        if (user !=  null) {
-            for(Map.Entry<String, Object> entry : patchMap.entrySet()) {
-                user.getData().put(entry.getKey(), entry.getValue());
-            }
-            try (Connection conn = SQLite.connect();
-                    PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
-                    stmt.setString(1, user.getDataValue("first_name").toString());
-                    stmt.setString(2, user.getDataValue("last_name").toString());
-                    stmt.setString(3, user.getDataValue("username").toString());
-                    stmt.setString(4, user.getDataValue("password").toString());
-                    stmt.setString(5, user.getDataValue("email").toString());
-                    stmt.setString(6, user.getDataValue("role").toString());
-                    stmt.setString(7, username);
-                    stmt.executeUpdate();
-                } catch (SQLException e) {
-                    LOGGER.error("Error patching user by username: " + e.getMessage());
-            }
+                LOGGER.error("Error patching user by username: " + e.getMessage());
         }
     }
 
