@@ -1,12 +1,13 @@
 package pos.api.teampixl.org.services;
 
+import java.util.Collection;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import pos.api.teampixl.org.database.repositories.UserRepository;
 import pos.api.teampixl.org.models.user.User;
 import pos.api.teampixl.org.models.user.UserDTO;
-
-import java.util.Collection;
 
 @Service
 public class UserService {
@@ -23,6 +24,10 @@ public class UserService {
 
     public void updateUser(String username, UserDTO userDTO) {
         userRepository.update(username, userDTO);
+    }
+
+    public void patchUser(String username, Map<String, Object> patchMap) {
+        userRepository.patch(username, patchMap);
     }
 
     public void createUser(UserDTO userDTO) {

@@ -1,5 +1,7 @@
 package pos.api.teampixl.org.models.user;
 
+import java.util.Map;
+
 public class UserDTO {
 
     private String firstName;
@@ -64,6 +66,17 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new java.util.HashMap<>();
+        map.put("firstName", this.firstName);
+        map.put("lastName", this.lastName);
+        map.put("username", this.username);
+        map.put("password", this.password);
+        map.put("email", this.email);
+        map.put("role", this.role);
+        return map;
     }
     
 }

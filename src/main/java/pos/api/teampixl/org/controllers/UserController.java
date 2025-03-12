@@ -72,8 +72,8 @@ public class UserController {
 
     @PatchMapping("/{username}")
     @Operation(summary = "Update a user by username")
-    public ResponseEntity<Map<String, Object>> patchUser(@PathVariable String username, @RequestBody UserDTO userDTO) {
-        userService.updateUser(username, userDTO);
+    public ResponseEntity<Map<String, Object>> patchUser(@PathVariable String username, @RequestBody Map<String, Object> patchMap) {
+        userService.patchUser(username, patchMap);
         return ResponseEntity.ok(Map.of("message", "User updated"));
     }
 

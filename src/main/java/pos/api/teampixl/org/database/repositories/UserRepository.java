@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -53,12 +54,12 @@ public class UserRepository {
         try (Connection conn = SQLite.connect();
              PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (id, first_name, last_name, username, password, email, role, created_at, updated_at, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             stmt.setString(1, user.getMetadataValue("id").toString());
-            stmt.setString(2, user.getMetadataValue("first_name").toString());
-            stmt.setString(3, user.getMetadataValue("last_name").toString());
-            stmt.setString(4, user.getMetadataValue("username").toString());
+            stmt.setString(2, user.getDataValue("first_name").toString());
+            stmt.setString(3, user.getDataValue("last_name").toString());
+            stmt.setString(4, user.getDataValue("username").toString());
             stmt.setString(5, user.getDataValue("password").toString());
             stmt.setString(6, user.getDataValue("email").toString());
-            stmt.setString(7, user.getMetadataValue("role").toString());
+            stmt.setString(7, user.getDataValue("role").toString());
             stmt.setLong(8, (long) user.getMetadataValue("created_at"));
             stmt.setLong(9, (long) user.getMetadataValue("updated_at"));
             stmt.setBoolean(10, (boolean) user.getMetadataValue("is_active"));
@@ -70,25 +71,45 @@ public class UserRepository {
     
     public void update(String username, UserDTO userDTO) {
         User user = find(username);
+        Map<String, Object> updateMap = userDTO.toMap();
         if (user != null) {
-            user.updateMetadata("first_name", userDTO.getFirstName());
-            user.updateMetadata("last_name", userDTO.getLastName());
-            user.updateMetadata("username", userDTO.getUsername());
-            user.getData().put("password", userDTO.getPassword());
-            user.getData().put("email", userDTO.getEmail());
-            user.updateMetadata("role", userDTO.getRole());
+            for(Map.Entry<String, Object> entry : updateMap.entrySet()) {
+                user.getData().put(entry.getKey(), entry.getValue());
+            }
             try (Connection conn = SQLite.connect();
-                 PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
-                stmt.setString(1, user.getMetadataValue("first_name").toString());
-                stmt.setString(2, user.getMetadataValue("last_name").toString());
-                stmt.setString(3, user.getMetadataValue("username").toString());
+                PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
+                stmt.setString(1, user.getDataValue("first_name").toString());
+                stmt.setString(2, user.getDataValue("last_name").toString());
+                stmt.setString(3, user.getDataValue("username").toString());
                 stmt.setString(4, user.getDataValue("password").toString());
                 stmt.setString(5, user.getDataValue("email").toString());
-                stmt.setString(6, user.getMetadataValue("role").toString());
+                stmt.setString(6, user.getDataValue("role").toString());
                 stmt.setString(7, username);
                 stmt.executeUpdate();
             } catch (SQLException e) {
                 LOGGER.error("Error updating user by username: " + e.getMessage());
+            }
+        }
+    }
+
+    public void patch(String username, Map<String, Object> patchMap) {
+        User user = find(username);
+        if (user !=  null) {
+            for(Map.Entry<String, Object> entry : patchMap.entrySet()) {
+                user.getData().put(entry.getKey(), entry.getValue());
+            }
+            try (Connection conn = SQLite.connect();
+                    PreparedStatement stmt = conn.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, email = ?, role = ? WHERE username = ?")) {
+                    stmt.setString(1, user.getDataValue("first_name").toString());
+                    stmt.setString(2, user.getDataValue("last_name").toString());
+                    stmt.setString(3, user.getDataValue("username").toString());
+                    stmt.setString(4, user.getDataValue("password").toString());
+                    stmt.setString(5, user.getDataValue("email").toString());
+                    stmt.setString(6, user.getDataValue("role").toString());
+                    stmt.setString(7, username);
+                    stmt.executeUpdate();
+                } catch (SQLException e) {
+                    LOGGER.error("Error patching user by username: " + e.getMessage());
             }
         }
     }

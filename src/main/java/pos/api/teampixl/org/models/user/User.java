@@ -43,23 +43,13 @@ public class User extends DataManager {
      * @param firstName first name
      * @param lastName last name
      * @param username username
-     * @param plainPassword password
+     * @param passwordHash password
      * @param email email
      * @param role role
      */
-    public User(String firstName, String lastName, String username, String plainPassword, String email, UserRole role) {
-        super(initializeMetadata(firstName, lastName, username, role));
+    public User(String firstName, String lastName, String username, String passwordHash, String email, UserRole role) {
+        super(initializeMetadata());
 
-        if (plainPassword == null || plainPassword.isEmpty()) {
-            throw new IllegalArgumentException("password cannot be null or empty");
-        }
-
-        this.data.put("password", plainPassword);
-        this.data.put("email", email);
-        this.data.put("additional_info", null);
-    }
-
-    private static MetadataWrapper initializeMetadata(String firstName, String lastName, String username, UserRole role) {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("username cannot be null or empty");
         }
@@ -73,12 +63,23 @@ public class User extends DataManager {
             throw new IllegalArgumentException("role cannot be null");
         }
 
+        if (passwordHash == null || passwordHash.isEmpty()) {
+            throw new IllegalArgumentException("password cannot be null or empty");
+        }
+
+        this.data.put("first_name", firstName);
+        this.data.put("last_name", lastName);
+        this.data.put("username", username);
+        this.data.put("role", role);
+        this.data.put("password", passwordHash);
+        this.data.put("email", email);
+        this.data.put("additional_info", null);
+    }
+
+    private static MetadataWrapper initializeMetadata() {
+
         Map<String, Object> metadataMap = new HashMap<>();
         metadataMap.put("id", UUID.randomUUID().toString());
-        metadataMap.put("first_name", firstName);
-        metadataMap.put("last_name", lastName);
-        metadataMap.put("username", username);
-        metadataMap.put("role", role);
         metadataMap.put("created_at", System.currentTimeMillis());
         metadataMap.put("updated_at", System.currentTimeMillis());
         metadataMap.put("is_active", true);
